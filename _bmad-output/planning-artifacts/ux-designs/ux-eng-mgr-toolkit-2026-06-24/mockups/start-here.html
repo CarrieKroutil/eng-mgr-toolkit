@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handbook — Start Here (mock)</title>
+<style>
+  /* Governed by: EXPERIENCE.md §Information Architecture (Surface 1 Start Here),
+     §Component Patterns (docs-sidebar, path-step-card, section-grid-card, search),
+     §Voice and Tone; DESIGN.md inherits carriekroutil.com tokens. Mock illustrates; spine is contract. */
+  :root{
+    --violet:#8b5cf6; --fuchsia:#d946ef; --amber:#f59e0b;
+    --bg:#0a0a0a; --surface:#15151a; --surface-2:#1c1c23;
+    --fg:#ededed; --muted:#a0a0ab; --border:#2a2a33;
+    --grad:linear-gradient(90deg,var(--violet),var(--fuchsia),var(--amber));
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  /* Header (inherited) */
+  header{position:sticky;top:0;backdrop-filter:blur(10px);
+    background:rgba(10,10,10,.72);border-bottom:1px solid var(--border);z-index:10}
+  .nav{display:flex;align-items:center;gap:18px;height:62px;max-width:1240px;margin:0 auto;padding:0 22px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.12rem;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav .spacer{flex:1}
+  .nav a.link{color:var(--muted);font-weight:600;font-size:.93rem}
+  .nav a.link.active{color:var(--fg)}
+  .nav a.link.active::after{content:"";display:block;height:2px;border-radius:2px;background:var(--grad);margin-top:3px}
+  .nav a.link:hover{color:var(--fg)}
+  .icon{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border);
+    border-radius:10px;color:var(--muted);font-size:.9rem}
+  /* Docs shell */
+  .shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:0}
+  /* Sidebar */
+  aside{border-right:1px solid var(--border);padding:26px 14px 40px;min-height:80vh}
+  .side-h{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
+    font-weight:700;padding:0 12px;margin-bottom:10px}
+  .side a{display:block;padding:7px 12px;border-radius:8px;color:var(--muted);font-size:.92rem;font-weight:500}
+  .side a:hover{background:var(--surface);color:var(--fg)}
+  .side a.cur{color:var(--fg);font-weight:700;background:var(--surface);
+    box-shadow:inset 3px 0 0 var(--fuchsia)}
+  .side .num{color:#666;font-size:.8rem;margin-right:7px}
+  /* Content */
+  main{padding:40px 40px 20px;max-width:880px}
+  h1{font-size:2.0rem;letter-spacing:-.02em;line-height:1.15;margin:0 0 8px}
+  .lede{color:var(--muted);font-size:1.1rem;max-width:60ch;margin:0 0 22px}
+  .jump{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);
+    background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:600;font-size:.9rem;color:var(--fg)}
+  .btn .kbd{border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:.78rem;color:var(--muted)}
+  .btn.ghost{color:var(--muted);background:transparent}
+  .eyebrow{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--fuchsia);margin:6px 0 14px}
+  /* Path step cards */
+  .steps{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+  .step{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:14px 18px;transition:transform .15s,border-color .15s}
+  .step:hover{transform:translateY(-2px);border-color:#3a3a46}
+  .step .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    font-weight:800;font-size:.95rem;color:#0a0a0a;background:var(--grad)}
+  .step .t{flex:1}
+  .step .t b{font-size:1.02rem;font-weight:700}
+  .step .t span{display:block;color:var(--muted);font-size:.9rem}
+  .step .arrow{color:var(--muted)}
+  .branch{color:var(--muted);font-size:.92rem;font-style:italic;margin:4px 0 36px;padding-left:46px}
+  /* Section grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+  .gcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 15px;
+    transition:transform .15s,border-color .15s}
+  .gcard:hover{transform:translateY(-2px);border-color:#3a3a46}
+  .gcard b{font-size:.95rem;display:block;margin-bottom:3px}
+  .gcard span{color:var(--muted);font-size:.83rem}
+  .gcard .gn{color:#666;font-size:.78rem;font-weight:700}
+  footer{margin:40px 0;color:#70707c;font-size:.85rem;text-align:center}
+  footer .accent{height:3px;width:80px;margin:0 auto 16px;border-radius:3px;background:var(--grad)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <span class="brand">carrie kroutil</span>
+      <div class="spacer"></div>
+      <a class="link active" href="#">Handbook</a>
+      <a class="link" href="#">Posts</a>
+      <a class="link" href="#">About</a>
+      <span class="icon" title="search">⌕</span>
+      <span class="icon" title="theme">☾</span>
+      <span class="icon" title="GitHub">GH</span>
+      <span class="icon" title="LinkedIn">in</span>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside>
+      <div class="side-h">Handbook</div>
+      <nav class="side">
+        <a class="cur" href="#">Start Here</a>
+        <a href="#"><span class="num">1</span>The Transition</a>
+        <a href="#"><span class="num">2</span>Managing Yourself</a>
+        <a href="#"><span class="num">3</span>People &amp; Leadership</a>
+        <a href="#"><span class="num">4</span>Performance &amp; Growth</a>
+        <a href="#"><span class="num">5</span>Hiring &amp; Team Building</a>
+        <a href="#"><span class="num">6</span>Team Health &amp; Operations</a>
+        <a href="#"><span class="num">7</span>Delivery &amp; Execution</a>
+        <a href="#"><span class="num">8</span>Operational Excellence</a>
+        <a href="#"><span class="num">9</span>Tools &amp; Productivity</a>
+        <a href="#"><span class="num">10</span>Building with AI</a>
+        <a href="#"><span class="num">11</span>Security &amp; Governance</a>
+        <a href="#"><span class="num">12</span>Engineering Foundations</a>
+      </nav>
+    </aside>
+
+    <main>
+      <h1>The Engineering Manager Handbook</h1>
+      <p class="lede">Notes from the trenches on engineering leadership — the people, the tooling, and the
+        foundations nobody hands you. New to management? Start at step one. Here for one thing? Jump straight to it.</p>
+
+      <div class="eyebrow">New to management? Start here →</div>
+      <div class="steps">
+        <a class="step" href="#"><span class="n">1</span><span class="t"><b>The Transition (Engineer → Manager)</b>
+          <span>Is this the right move? What changes, and your first 90 days.</span></span><span class="arrow">→</span></a>
+        <a class="step" href="#"><span class="n">2</span><span class="t"><b>Managing Yourself</b>
+          <span>Time, energy, boundaries — keep your own tank full first.</span></span><span class="arrow">→</span></a>
+        <a class="step" href="#"><span class="n">3</span><span class="t"><b>People &amp; Leadership</b>
+          <span>What the job actually is: leading, communicating, inclusive teams.</span></span><span class="arrow">→</span></a>
+        <a class="step" href="#"><span class="n">4</span><span class="t"><b>Performance &amp; Growth</b>
+          <span>1:1s, feedback, coaching, reviews, growing your people.</span></span><span class="arrow">→</span></a>
+        <a class="step" href="#"><span class="n">5</span><span class="t"><b>Hiring &amp; Team Building</b>
+          <span>Interview inclusively, onboard well, build the team.</span></span><span class="arrow">→</span></a>
+      </div>
+      <p class="branch">…then branch by what you're facing — delivery, on-call, AI, security, or the engineering must-knows.</p>
+
+      <div class="eyebrow">Browse all 12 sections</div>
+      <div class="grid">
+        <a class="gcard" href="#"><span class="gn">01</span><b>The Transition</b><span>Engineer → Manager</span></a>
+        <a class="gcard" href="#"><span class="gn">02</span><b>Managing Yourself</b><span>Sustain &amp; grow</span></a>
+        <a class="gcard" href="#"><span class="gn">03</span><b>People &amp; Leadership</b><span>Lead &amp; communicate</span></a>
+        <a class="gcard" href="#"><span class="gn">04</span><b>Performance &amp; Growth</b><span>1:1s, feedback, reviews</span></a>
+        <a class="gcard" href="#"><span class="gn">05</span><b>Hiring &amp; Team Building</b><span>Recruit &amp; onboard</span></a>
+        <a class="gcard" href="#"><span class="gn">06</span><b>Team Health &amp; Operations</b><span>Health, ceremonies, lifecycle</span></a>
+        <a class="gcard" href="#"><span class="gn">07</span><b>Delivery &amp; Execution</b><span>Scope, resources, time</span></a>
+        <a class="gcard" href="#"><span class="gn">08</span><b>Operational Excellence</b><span>On-call, monitoring, incidents</span></a>
+        <a class="gcard" href="#"><span class="gn">09</span><b>Tools &amp; Productivity</b><span>Automation &amp; tips</span></a>
+        <a class="gcard" href="#"><span class="gn">10</span><b>Building with AI</b><span>Literacy &amp; AI-native eng</span></a>
+        <a class="gcard" href="#"><span class="gn">11</span><b>Security &amp; Governance</b><span>OWASP, NIST, compliance</span></a>
+        <a class="gcard" href="#"><span class="gn">12</span><b>Engineering Foundations</b><span>i18n, a11y, the must-knows</span></a>
+      </div>
+
+      <footer><div class="accent"></div>carriekroutil.com · made with Hugo + a lot of coffee</footer>
+    </main>
+  </div>
+</body>
+</html>

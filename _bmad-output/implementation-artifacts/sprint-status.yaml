@@ -1,0 +1,121 @@
+# generated: 2026-06-25T10:34:13-0700
+# last_updated: 2026-06-25T10:34:13-0700
+# project: eng-mgr-toolkit
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: {project-root}/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+
+generated: 2026-06-25T10:34:13-0700
+last_updated: 2026-06-25
+project: eng-mgr-toolkit
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: A branded, navigable Handbook shell — SHIPPED (PR #21 merged 2026-06-25, commit 2a95903)
+  epic-1: done
+  1-1-stand-up-the-handbook-docs-mode-section-header-nav: done
+  1-2-scaffold-the-12-sections-in-fixed-order-with-stable-slugs: done
+  1-3-brand-match-the-docs-mode-shell-sidebar-active-state-tokens: done
+  1-4-full-text-search-across-the-handbook: done
+  1-5-accessibility-semantic-floor-for-the-shell: done
+  1-6-pipeline-ready-build-on-the-handbook-branch: done
+  epic-1-retrospective: optional
+
+  # Epic 2: Topic content model + the complete IA — SHIPPED (PR #21 merged 2026-06-25)
+  epic-2: done
+  2-1-topic-anatomy-front-matter-contract-pro-tip-callout: done
+  2-2-go-deeper-block-partial-theme-aware-accent-tokens: done
+  2-3-stub-treatment-microcopy: done
+  2-4-populate-the-transition: done
+  2-5-populate-managing-yourself: done
+  2-6-populate-people-leadership-leadership-inclusion-belonging-part-a: done
+  2-7-populate-people-leadership-communication-strategy-part-b: done
+  2-8-populate-performance-growth: done
+  2-9-populate-hiring-team-building: done
+  2-10-populate-team-health-operations: done
+  2-11-populate-delivery-execution: done
+  2-12-populate-operational-excellence: done
+  2-13-populate-tools-productivity: done
+  2-14-populate-building-with-ai: done
+  2-15-populate-security-governance: done
+  2-16-populate-engineering-foundations-architecture-metrics-agile-part-a: done
+  2-17-populate-engineering-foundations-cloud-native-networking-learning-path-part-b: done
+  2-18-populate-engineering-foundations-the-must-know-stubs-part-c: done
+  2-19-completeness-check-cross-topic-links: done
+  epic-2-retrospective: optional
+
+  # Epic 3: The Start Here front door + Go-Live — SHIPPED LIVE (carriekroutil.com/handbook, 2026-06-25)
+  epic-3: done
+  3-1-build-the-start-here-landing-guided-path: done
+  3-2-uat-by-carrie-acceptance-review-fix-loop: done
+  3-3-go-live-pr-merge-handbook-to-main-very-last-step: done
+  3-4-verify-analytics-discoverability-in-production: done
+  epic-3-retrospective: done
+
+# Open action items surfaced by sprint-status and reviewed at retrospectives.
+action_items:
+  - id: hextra-banner-landmark-upstream
+    status: open
+    owner: Carrie
+    source: Epic 1 / Story 1.5 (a11y floor)
+    raise_at: epic-1-retrospective
+    description: >-
+      Contribute a `banner` landmark a11y fix upstream to imfing/hextra
+      (navbar wrapper <div class="hextra-nav-container"> -> <header>). Ready-to-file
+      issue + PR drafts at eng-mgr-toolkit/follow-ups/hextra-banner-landmark.md.
+      Carrie to open it later; remind during the Epic 1 retro. Not vendoring a
+      local override — handbook already meets WCAG 2.1 AA.
+      (Still open at the Epic 3 retro 2026-06-25; carried forward.)
+  - epic: 3
+    action: "Expand the 30 live stubs in place over time; let GoatCounter prioritize which topics to write next."
+    owner: "Carrie"
+    status: open
+  - epic: 3
+    action: "On any Hextra upgrade past v0.12.3, re-diff the copied docs/list.html else-branch against the new module template."
+    owner: "whoever upgrades"
+    status: open
+  - epic: 3
+    action: "Bake responsive testing into the process: add a mobile/tablet/desktop AC to UI stories and a viewport dimension to code review (optionally a BMAD skill customization)."
+    owner: "Carrie / Claude"
+    status: open
+  - epic: 3
+    action: "Persist agreed copy/decisions into artifacts (not just chat); test the user's stated hypothesis first before proposing alternatives."
+    owner: "Claude"
+    status: done

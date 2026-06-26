@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handbook — Topic page (mock)</title>
+<style>
+  /* Governed by: EXPERIENCE.md §Information Architecture (Surface 3 Topic), §Component Patterns
+     (breadcrumbs, on-this-page-toc, go-deeper-block, stub-badge, pro-tip-callout, prev-next-nav),
+     §State Patterns (Stub state), §Voice and Tone; DESIGN.md (inherited tokens + docs-mode adds).
+     Two states shown: FULL topic, then STUB topic. Spine is contract; mock illustrates. */
+  :root{
+    --violet:#8b5cf6; --fuchsia:#d946ef; --amber:#f59e0b;
+    --bg:#0a0a0a; --surface:#15151a; --surface-2:#1c1c23;
+    --fg:#ededed; --muted:#a0a0ab; --border:#2a2a33;
+    --grad:linear-gradient(90deg,var(--violet),var(--fuchsia),var(--amber));
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  header{position:sticky;top:0;backdrop-filter:blur(10px);
+    background:rgba(10,10,10,.72);border-bottom:1px solid var(--border);z-index:10}
+  .nav{display:flex;align-items:center;gap:18px;height:62px;max-width:1240px;margin:0 auto;padding:0 22px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.12rem;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav .spacer{flex:1}
+  .nav a.link{color:var(--muted);font-weight:600;font-size:.93rem}
+  .nav a.link.active{color:var(--fg)}
+  .nav a.link.active::after{content:"";display:block;height:2px;border-radius:2px;background:var(--grad);margin-top:3px}
+  .icon{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border);
+    border-radius:10px;color:var(--muted);font-size:.9rem}
+  /* 3-col docs shell */
+  .shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:260px 1fr 200px;gap:0}
+  @media(max-width:1000px){.shell{grid-template-columns:1fr}.toc,aside{display:none}}
+  aside{border-right:1px solid var(--border);padding:26px 12px 40px}
+  .side-h{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
+    font-weight:700;padding:0 12px;margin-bottom:10px}
+  .side a{display:block;padding:6px 12px;border-radius:8px;color:var(--muted);font-size:.9rem;font-weight:500}
+  .side a:hover{background:var(--surface);color:var(--fg)}
+  .side a.cur{color:var(--fg);font-weight:700;background:var(--surface);box-shadow:inset 3px 0 0 var(--fuchsia)}
+  .side a.sub{padding-left:24px;font-size:.86rem}
+  main{padding:30px 38px 10px;max-width:780px}
+  .crumbs{color:var(--muted);font-size:.82rem;margin-bottom:14px}
+  .crumbs a:hover{color:var(--fg)}
+  .titlerow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  h1{font-size:2.0rem;letter-spacing:-.02em;line-height:1.15;margin:0}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;
+    padding:4px 11px;border-radius:999px;background:var(--surface-2);color:#ffd591;border:1px solid #8a5a12}
+  .updated{color:var(--muted);font-size:.82rem;margin:8px 0 22px}
+  h2{font-size:1.35rem;letter-spacing:-.01em;margin:30px 0 10px;scroll-margin-top:80px}
+  p{margin:0 0 14px}
+  .lead{font-size:1.08rem}
+  ul{margin:0 0 14px;padding-left:20px}
+  li{margin:4px 0}
+  .protip{border:1px solid #8a5a12;background:linear-gradient(180deg,#1c150a,#15151a);
+    border-radius:12px;padding:12px 16px;margin:16px 0;color:#ffe9c2;font-size:.95rem}
+  .protip b{color:var(--amber)}
+  /* Go Deeper */
+  .gd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;margin:30px 0 18px}
+  .gd h3{margin:0 0 12px;font-size:1.05rem}
+  .gd .grp{margin-bottom:12px}
+  .gd .grp:last-child{margin-bottom:0}
+  .gd .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:5px}
+  .gd .lbl.v{color:#c9b8ff} .gd .lbl.f{color:#f3a8ff} .gd .lbl.a{color:#ffd591}
+  .gd .item{margin:4px 0;font-size:.93rem}
+  .gd .item a{color:var(--fg);font-weight:600;text-decoration:underline;text-decoration-color:#3a3a46;text-underline-offset:2px}
+  .gd .item a:hover{color:var(--fuchsia);text-decoration-color:var(--fuchsia)}
+  .gd .item span{color:var(--muted)}
+  .prevnext{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--border);
+    padding-top:16px;margin-top:26px}
+  .pn{color:var(--muted);font-size:.9rem}
+  .pn b{display:block;color:var(--fg);font-weight:700}
+  /* TOC */
+  .toc{padding:34px 16px;position:sticky;top:62px;align-self:start}
+  .toc .h{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:10px}
+  .toc a{display:block;color:var(--muted);font-size:.85rem;padding:3px 0}
+  .toc a.act{color:var(--fuchsia);font-weight:600}
+  .statelabel{max-width:1240px;margin:0 auto;padding:22px 22px 0;color:#70707c;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+  hr.div{max-width:1240px;margin:30px auto 0;border:0;border-top:1px dashed var(--border)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <span class="brand">carrie kroutil</span>
+      <div class="spacer"></div>
+      <a class="link active" href="#">Handbook</a>
+      <a class="link" href="#">Posts</a><a class="link" href="#">About</a>
+      <span class="icon">⌕</span><span class="icon">☾</span><span class="icon">GH</span><span class="icon">in</span>
+    </div>
+  </header>
+
+  <!-- ============ STATE A: FULL TOPIC ============ -->
+  <div class="statelabel">State A — full topic</div>
+  <div class="shell">
+    <aside>
+      <div class="side-h">Handbook</div>
+      <nav class="side">
+        <a href="#">Start Here</a>
+        <a href="#">7 · Delivery &amp; Execution</a>
+        <a class="cur sub" href="#">Scope, resources &amp; time</a>
+        <a class="sub" href="#">Delegation</a>
+        <a class="sub" href="#">Prioritization &amp; roadmaps</a>
+        <a class="sub" href="#">Tech debt vs. impact</a>
+        <a href="#">8 · Operational Excellence</a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="crumbs"><a href="#">Handbook</a> / <a href="#">Delivery &amp; Execution</a> / Scope, resources &amp; time</div>
+      <div class="titlerow"><h1>Scope, resources &amp; time</h1></div>
+      <div class="updated">Last updated: Jun 24, 2026 · 4 min</div>
+
+      <p class="lead">Every project gives you three levers, and you rarely control all of them. Knowing which
+        one you can move — and saying so out loud — is half of delivery management.</p>
+
+      <h2>The three levers</h2>
+      <p>When a deadline and a scope and a team collide, you're really negotiating across three things:</p>
+      <ul>
+        <li><b>Scope</b> — what the project will actually deliver.</li>
+        <li><b>Resources</b> — how many engineers you assign.</li>
+        <li><b>Time</b> — how long you have.</li>
+      </ul>
+      <p>Sometimes you can flex all three; usually you can't. Everything is a trade-off — name the one that's movable.</p>
+
+      <div class="protip"><b>Pro Tip:</b> When someone asks for more scope <i>and</i> an earlier date, don't say
+        "no" — say "which lever moves?" It reframes a conflict as a shared decision.</div>
+
+      <h2>Making the trade visible</h2>
+      <p>The mistake new managers make is absorbing the tension silently. Put the levers on the table so the
+        trade-off is a decision your stakeholders make <i>with</i> you, not a surprise you eat alone.</p>
+
+      <div class="gd">
+        <h3>📚 Go Deeper</h3>
+        <div class="grp"><div class="lbl v">Books</div>
+          <div class="item"><a href="#">High Output Management — Andy Grove</a> <span>— the one to read first; dense, worth it.</span></div>
+          <div class="item"><a href="#">The Making of a Manager — Julie Zhuo</a> <span>— warm, practical, great for new EMs.</span></div>
+        </div>
+        <div class="grp"><div class="lbl f">Articles</div>
+          <div class="item"><a href="#">Your Levers: Scope, Resources &amp; Time — The Engineering Manager</a> <span>— the deeper version of this page.</span></div>
+        </div>
+      </div>
+
+      <div class="prevnext">
+        <span class="pn">←<b>Delegation</b></span>
+        <span class="pn" style="text-align:right">Next →<b>Prioritization &amp; roadmaps</b></span>
+      </div>
+    </main>
+
+    <div class="toc">
+      <div class="h">On this page</div>
+      <a class="act" href="#">The three levers</a>
+      <a href="#">Making the trade visible</a>
+      <a href="#">Go Deeper</a>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ============ STATE B: STUB TOPIC ============ -->
+  <div class="statelabel">State B — stub topic (🚧 Expanding)</div>
+  <div class="shell">
+    <aside>
+      <div class="side-h">Handbook</div>
+      <nav class="side">
+        <a href="#">8 · Operational Excellence</a>
+        <a class="cur sub" href="#">On-call</a>
+        <a class="sub" href="#">Monitoring &amp; alerting</a>
+        <a class="sub" href="#">Incident response</a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="crumbs"><a href="#">Handbook</a> / <a href="#">Operational Excellence</a> / On-call</div>
+      <div class="titlerow"><h1>On-call</h1><span class="badge">🚧 Expanding</span></div>
+      <div class="updated">Last updated: Jun 24, 2026</div>
+
+      <p class="lead">Setting up a humane, effective on-call rotation — who carries the pager, how alerts
+        escalate, and how you keep it from burning people out.</p>
+
+      <p style="color:var(--muted)">🚧 <b style="color:var(--fg)">Expanding</b> — the full deep-dive's still
+        cooking. Meanwhile, the Go Deeper picks below are the real ones I'd hand you if you asked me today.</p>
+
+      <div class="gd">
+        <h3>📚 Go Deeper</h3>
+        <div class="grp"><div class="lbl v">Books</div>
+          <div class="item"><a href="#">Seeking SRE — ed. David Blank-Edelman</a> <span>— broad, practitioner perspectives on running on-call.</span></div>
+        </div>
+        <div class="grp"><div class="lbl f">Courses / Free</div>
+          <div class="item"><a href="#">Google SRE Book (free, online)</a> <span>— the on-call &amp; incident chapters are gold.</span></div>
+        </div>
+        <div class="grp"><div class="lbl a">Tools</div>
+          <div class="item"><a href="#">PagerDuty / Opsgenie</a> <span>— rotation, escalation, alerting in practice.</span></div>
+        </div>
+      </div>
+
+      <div class="prevnext">
+        <span class="pn">←<b>Operational Excellence</b></span>
+        <span class="pn" style="text-align:right">Next →<b>Monitoring &amp; alerting</b></span>
+      </div>
+    </main>
+
+    <div class="toc">
+      <div class="h">On this page</div>
+      <a href="#">Go Deeper</a>
+    </div>
+  </div>
+</body>
+</html>

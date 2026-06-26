@@ -1,0 +1,18 @@
+# This repo archives the BMAD *output* (_bmad-output/), not the toolchain.
+# The BMAD framework install and the agent harness are intentionally excluded.
+.claude/
+_bmad/
+
+# Personal BMAD config overrides (convention: *.user.toml is personal)
+*.user.toml
+
+# BMAD skill-internal working files — keep the archive to finished artifacts,
+# not the memory-logs and draft scratch the skills produce while working.
+.memlog.md
+**/.working/
+
+# Transient tool / preview artifacts
+.playwright-mcp/
+
+# OS cruft
+.DS_Store
